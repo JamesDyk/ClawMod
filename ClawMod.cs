@@ -1,6 +1,7 @@
 using Kingmaker.Blueprints;
 using Kingmaker.UnitLogic.ActivatableAbilities;
 using System;
+using System.Reflection;
 using UnityModManagerNet;
 
 namespace ClawMod
@@ -69,7 +70,10 @@ namespace ClawMod
             };
             // Starting from top Row: Abyssal, Black, Blue, Brass, Bronze, Copper, Gold, Green, Red, Silver, White
 
-            LibraryScriptableObject lib = ResourcesLibrary.LibraryObject;
+            LibraryScriptableObject lib = typeof(ResourcesLibrary)
+                .GetField("s_LibraryObject", BindingFlags.Static | BindingFlags.NonPublic)
+                .GetValue(null) as LibraryScriptableObject;
+            
             if (lib == null)
                 return false;
 
